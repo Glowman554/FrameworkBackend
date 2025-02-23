@@ -16,7 +16,7 @@ export default function (props: Props) {
     return (
         <Query f={() => actions.authentication.status.orThrow()} queryKey="internal-status">
             {(user) => (
-                <Overlay visible={!(user && props.check(user))}>
+                <Overlay visible={!(user && props.check(user))} reset={() => {}}>
                     <div class="field">
                         <p>You can't access this page</p>
                         <Show when={!user}>
