@@ -2,7 +2,7 @@
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
 import { sql } from 'drizzle-orm';
-import { int, integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { foreignKey, int, integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 export const Users = sqliteTable('users', {
     username: text('username').primaryKey().notNull(),
@@ -38,7 +38,7 @@ export const TelemetrySessions = sqliteTable('telemetrySessions', {
 });
 
 export const TelemetryDiscord = sqliteTable('telemetryDiscord', {
-    sessionId: text('sessionId')
+    sessionId: integer('sessionId')
         .references(() => TelemetrySessions.sessionId, { onDelete: 'cascade', onUpdate: 'cascade' })
         .primaryKey()
         .notNull(),
@@ -46,6 +46,18 @@ export const TelemetryDiscord = sqliteTable('telemetryDiscord', {
     userId: text('userId').notNull(),
     username: text('username').notNull(),
     discriminator: text('discriminator'),
+});
+
+export const TelemetrySystem = sqliteTable('telemetrySystem', {
+    sessionId: integer('sessionId')
+        .references(() => TelemetrySessions.sessionId, { onDelete: 'cascade', onUpdate: 'cascade' })
+        .primaryKey()
+        .notNull(),
+
+    osName: text('osName').notNull(),
+    osVersion: text('osVersion').notNull(),
+    osArch: text('osArch').notNull(),
+    cpuCores: integer('cpuCores').notNull(),
 });
 
 export const TelemetryModifications = sqliteTable(
@@ -62,19 +74,22 @@ export const TelemetryModifications = sqliteTable(
 export const TelemetryActiveModifications = sqliteTable(
     'telemetryActiveModifications',
     {
-        sessionId: text('sessionId')
+        sessionId: integer('sessionId')
             .references(() => TelemetrySessions.sessionId, { onDelete: 'cascade', onUpdate: 'cascade' })
             .notNull(),
 
-        name: text('name')
-            .references(() => TelemetryModifications.name, { onDelete: 'cascade', onUpdate: 'cascade' })
-            .notNull(),
-        version: text('version')
-            .references(() => TelemetryModifications.version, { onDelete: 'cascade', onUpdate: 'cascade' })
-            .notNull(),
+        name: text('name').notNull(),
+        version: text('version').notNull(),
     },
     (t) => ({
         pk: primaryKey({ columns: [t.sessionId, t.name, t.version] }),
+
+        fk: foreignKey(() => ({
+            columns: [t.name, t.version],
+            foreignColumns: [TelemetryModifications.name, TelemetryModifications.version],
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+        })),
     })
 );
 
@@ -85,7 +100,7 @@ export const TelemetryModules = sqliteTable('telemetryModules', {
 export const TelemetryActiveModules = sqliteTable(
     'telemetryActiveModules',
     {
-        sessionId: text('sessionId')
+        sessionId: integer('sessionId')
             .references(() => TelemetrySessions.sessionId, { onDelete: 'cascade', onUpdate: 'cascade' })
             .notNull(),
 
