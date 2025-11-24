@@ -12,7 +12,10 @@ const versions = await Astro.callAction(actions.version.loadAll.orThrow, {});
 {
     versions.map((version) => (
         <div class="section rounded-lg bg-neutral-800 p-2">
-            {version.version} - End of Life: {version.endOfLife ? 'Yes' : 'No'}
+            <a href={version.downloadUrl} class="text-blue-400 underline">
+                {version.version}
+                {version.endOfLife ? ' - This version is no longer supported' : ''}
+            </a>
             {editMode && (
                 <div class="flex flex-row">
                     <VersionEditorButtons version={version} client:load />
