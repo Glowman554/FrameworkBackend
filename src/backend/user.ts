@@ -28,5 +28,5 @@ export async function loadProfile(username: string, profile: string) {
         throw new Error('Failed to load profile');
     }
 
-    return JSON.parse(loaded.profile);
+    return JSON.parse(loaded.configuration);
 }

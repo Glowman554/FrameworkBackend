@@ -35,5 +35,5 @@ export async function getProfile(token: string) {
         return null;
     }
 
-    return validateOrThrow(ProfileSchema, res.json());
+    return validateOrThrow(ProfileSchema, await res.json());
 }
