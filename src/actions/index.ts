@@ -3,6 +3,7 @@ import { z } from 'astro:schema';
 import { authentication } from './authentication';
 import { version } from './version';
 import { uploads } from './uploads';
+import { featured } from './featured';
 
 export const server = {
     double: defineAction({
@@ -14,4 +15,5 @@ export const server = {
     authentication,
     version,
     uploads,
+    featured
 };

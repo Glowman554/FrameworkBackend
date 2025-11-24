@@ -134,3 +134,9 @@ export const ClientVersions = sqliteTable('clientVersions', {
     endOfLife: integer('endOfLife', { mode: 'boolean' }).default(false).notNull(),
     downloadUrl: text('downloadUrl').notNull(),
 });
+
+export const FeaturedServers = sqliteTable('featuredServers', {
+    id: integer('id').primaryKey({ autoIncrement: true }).notNull(),
+    name: text('name').notNull(),
+    address: text('address').notNull(),
+});
