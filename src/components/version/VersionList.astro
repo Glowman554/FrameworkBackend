@@ -1,0 +1,23 @@
+---
+import { actions } from 'astro:actions';
+import { VersionEditorButtons } from './VersionEditor';
+
+interface Props {
+    editMode: boolean;
+}
+const { editMode } = Astro.props;
+const versions = await Astro.callAction(actions.version.loadAll.orThrow, {});
+---
+
+{
+    versions.map((version) => (
+        <div class="section rounded-lg bg-neutral-800 p-2">
+            {version.version} - End of Life: {version.endOfLife ? 'Yes' : 'No'}
+            {editMode && (
+                <div class="flex flex-row">
+                    <VersionEditorButtons version={version} client:load />
+                </div>
+            )}
+        </div>
+    ))
+}

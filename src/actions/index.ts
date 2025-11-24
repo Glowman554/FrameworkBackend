@@ -1,6 +1,8 @@
 import { defineAction } from 'astro:actions';
 import { z } from 'astro:schema';
 import { authentication } from './authentication';
+import { version } from './version';
+import { uploads } from './uploads';
 
 export const server = {
     double: defineAction({
@@ -10,4 +12,6 @@ export const server = {
         },
     }),
     authentication,
+    version,
+    uploads,
 };

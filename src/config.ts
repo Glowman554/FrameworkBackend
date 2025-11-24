@@ -12,6 +12,10 @@ export function validateOrThrow<T>(schema: ZodSchema<T>, data: unknown): T {
 }
 const schema = z.object({
     database: z.object({ authToken: z.string().optional(), url: z.string() }),
+    upload: z.object({
+        uploadServer: z.string().url(),
+        authToken: z.string(),
+    }),
 });
 
 export const config = validateOrThrow(schema, JSON.parse(new TextDecoder().decode(readFileSync('config.json'))));
