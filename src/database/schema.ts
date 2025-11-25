@@ -140,3 +140,14 @@ export const FeaturedServers = sqliteTable('featuredServers', {
     name: text('name').notNull(),
     address: text('address').notNull(),
 });
+
+export const ClientMessages = sqliteTable('clientMessages', {
+    id: integer('id').primaryKey({ autoIncrement: true }).notNull(),
+    username: text('username')
+        .references(() => MinecraftUsers.username, { onDelete: 'cascade', onUpdate: 'cascade' })
+        .notNull(),
+    message: text('message').notNull(),
+    timestamp: integer('timestamp', { mode: 'timestamp' })
+        .default(sql`(strftime('%s', 'now'))`)
+        .notNull(),
+});

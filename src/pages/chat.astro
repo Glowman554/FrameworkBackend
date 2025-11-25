@@ -1,0 +1,11 @@
+---
+import ChatSubscription from '../components/chat/ChatSubscription';
+import Layout from '../components/Layout.astro';
+---
+
+<Layout title="Framework - Global chat" description="Global chat">
+    <h1 class="text-3xl">Global chat</h1>
+    <br />
+
+    <ChatSubscription client:only />
+</Layout>

@@ -22,8 +22,17 @@ export const ProfileSchema = z.object({
     skins: z.array(SkinSchema),
     capes: z.array(CapeSchema),
 });
+type Profile = z.infer<typeof ProfileSchema>;
+
+const profileCache = new Map<string, Profile & { timestamp: number }>();
 
 export async function getProfile(token: string) {
+    const cached = profileCache.get(token);
+    const now = Date.now();
+    if (cached && now - cached.timestamp < 5 * 60 * 1000) {
+        return cached;
+    }
+
     const res = await fetch('https://api.minecraftservices.com/minecraft/profile', {
         headers: {
             Authorization: 'Bearer ' + token,
@@ -35,5 +44,7 @@ export async function getProfile(token: string) {
         return null;
     }
 
-    return validateOrThrow(ProfileSchema, await res.json());
+    const profile = validateOrThrow(ProfileSchema, await res.json());
+    profileCache.set(token, { ...profile, timestamp: Date.now() });
+    return profile;
 }

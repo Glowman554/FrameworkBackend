@@ -7,6 +7,8 @@ export async function insertUserIfNecessary(username: string) {
 }
 
 export async function createOrUpdateProfile(username: string, profile: string, configuration: any) {
+    await insertUserIfNecessary(username);
+
     const configurationEncoded = JSON.stringify(configuration);
     await db
         .insert(ConfigurationProfiles)

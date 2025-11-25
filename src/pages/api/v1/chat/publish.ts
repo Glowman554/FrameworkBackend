@@ -2,7 +2,8 @@ import { type APIContext } from 'astro';
 import { validateOrThrow } from '../../../../config';
 import z from 'zod';
 import { getProfile } from '../../../../backend/minecraft';
-import { createOrUpdateProfile, insertUserIfNecessary } from '../../../../backend/user';
+import { actions } from 'astro:actions';
+import type { ChatMessage } from '../../../../actions/chat';
 
 export const prerender = false;
 
@@ -12,7 +13,7 @@ const headers = {
     'Access-Control-Allow-Headers': 'Authentication, Content-Type',
 };
 
-const schema = z.object({ name: z.string(), configuration: z.any() });
+const schema = z.object({ message: z.string().max(512) });
 
 export async function POST(context: APIContext) {
     const token = context.request.headers.get('Authentication');
@@ -20,14 +21,12 @@ export async function POST(context: APIContext) {
         throw new Error('Missing authentication token');
     }
 
-    const mc = await getProfile(token);
-    if (!mc) {
-        return new Response('', { status: 400, headers });
-    }
-
     const input = validateOrThrow(schema, await context.request.json());
 
-    await createOrUpdateProfile(mc.name, input.name, input.configuration);
+    const res = await context.callAction(actions.chat.publish, { message: input.message, token });
+    if (res.error) {
+        return new Response('', { status: 500, headers });
+    }
 
     return new Response(JSON.stringify({}), {
         status: 200,
