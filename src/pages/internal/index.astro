@@ -1,0 +1,15 @@
+---
+import AdministratorOnly from '../../components/AdministratorOnly';
+import Layout from '../../components/Layout.astro';
+import PasswordChangeButton from '../../components/user/PasswordChangeButton';
+---
+
+<Layout title="Framework - Internal" description="For internal use only.">
+    <AdministratorOnly client:load />
+    <PasswordChangeButton client:load />
+
+    <div class="center m-4 rounded-xl bg-neutral-800">
+        <a class="p-2 underline hover:text-blue-400" href="/internal/versions">Versions</a>
+        <a class="p-2 underline hover:text-blue-400" href="/internal/featured">Featured Servers</a>
+    </div>
+</Layout>

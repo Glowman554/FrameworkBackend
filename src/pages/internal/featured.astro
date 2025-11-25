@@ -1,0 +1,12 @@
+---
+import AdministratorOnly from '../../components/AdministratorOnly';
+import FeaturedList from '../../components/featured/FeaturedList.astro';
+import FeaturedNewButton from '../../components/featured/FeaturedNewButton';
+import Layout from '../../components/Layout.astro';
+---
+
+<Layout title="Framework - Featured (internal)" description="For internal use only">
+    <AdministratorOnly client:load />
+    <FeaturedNewButton client:load />
+    <FeaturedList editMode={true} />
+</Layout>

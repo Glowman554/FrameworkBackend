@@ -15,5 +15,5 @@ export const server = {
     authentication,
     version,
     uploads,
-    featured
+    featured,
 };

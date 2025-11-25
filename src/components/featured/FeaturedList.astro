@@ -1,0 +1,25 @@
+---
+import { actions } from 'astro:actions';
+import { FeaturedEditorButtons } from './FeaturedEditor';
+
+interface Props {
+    editMode: boolean;
+}
+const { editMode } = Astro.props;
+const featured = await Astro.callAction(actions.featured.loadAll.orThrow, {});
+---
+
+{
+    featured.map((featured) => (
+        <div class="section rounded-lg bg-neutral-800 p-2">
+            <a href={featured.address} class="text-blue-400 underline">
+                {featured.name}
+            </a>
+            {editMode && (
+                <div class="flex flex-row">
+                    <FeaturedEditorButtons featured={featured} client:load />
+                </div>
+            )}
+        </div>
+    ))
+}
