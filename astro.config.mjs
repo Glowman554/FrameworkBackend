@@ -11,7 +11,7 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
     // Enable Solid to support Solid JSX components.
-    site: 'https://test.glowman554.de',
+    site: 'https://framework.toxicfox.de',
     integrations: [solid({ include: ['**'] }), sitemap()],
 
     vite: {
