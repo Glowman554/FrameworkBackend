@@ -3,6 +3,7 @@ import { db } from '../database/database';
 import { FeaturedServers } from '../database/schema';
 import { z } from 'astro:content';
 import { eq, type InferSelectModel } from 'drizzle-orm';
+import { permission } from './authentication';
 
 export type FeaturedServer = InferSelectModel<typeof FeaturedServers>;
 
@@ -17,6 +18,8 @@ export const featured = {
     create: defineAction({
         input: z.object({ name: z.string(), address: z.string() }),
         async handler(input, context) {
+            await permission(context, (u) => u.administrator);
+
             await db.insert(FeaturedServers).values({
                 name: input.name,
                 address: input.address,
@@ -27,6 +30,8 @@ export const featured = {
     delete: defineAction({
         input: z.object({ id: z.number() }),
         async handler(input, context) {
+            await permission(context, (u) => u.administrator);
+
             await db.delete(FeaturedServers).where(eq(FeaturedServers.id, input.id));
         },
     }),
@@ -34,6 +39,8 @@ export const featured = {
     update: defineAction({
         input: z.object({ id: z.number(), name: z.string(), address: z.string() }),
         async handler(input, context) {
+            await permission(context, (u) => u.administrator);
+
             await db
                 .update(FeaturedServers)
                 .set({ name: input.name, address: input.address })

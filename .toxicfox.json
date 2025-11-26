@@ -19,9 +19,7 @@
                 "{{base}}/data/Framework/config.json": "/srv/config.json",
                 "{{base}}/data/Framework/data.db": "/srv/data.db"
             },
-            "networks": [
-                "router"
-            ]
+            "networks": ["router"]
         }
     ]
 }

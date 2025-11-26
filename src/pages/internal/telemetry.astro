@@ -1,0 +1,16 @@
+---
+import AdministratorOnly from '../../components/AdministratorOnly';
+import Layout from '../../components/Layout.astro';
+import TelemetrySystemChart from '../../components/telemetry/TelemetrySystemChart';
+import TelemetryModulesChart from '../../components/telemetry/TelemetryModulesChart';
+import TelemetryModificationsChart from '../../components/telemetry/TelemetryModificationsChart';
+
+export const prerender = false;
+---
+
+<Layout title="Framework - Telemetry (internal)" description="For internal use only">
+    <AdministratorOnly client:load />
+    <TelemetrySystemChart client:load />
+    <TelemetryModulesChart client:load />
+    <TelemetryModificationsChart client:load />
+</Layout>

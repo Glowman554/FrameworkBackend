@@ -5,6 +5,7 @@ import { version } from './version';
 import { uploads } from './uploads';
 import { featured } from './featured';
 import { chat } from './chat';
+import { telemetry } from './telemetry';
 
 export const server = {
     double: defineAction({
@@ -18,4 +19,5 @@ export const server = {
     uploads,
     featured,
     chat,
+    telemetry,
 };

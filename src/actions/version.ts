@@ -3,6 +3,7 @@ import { z } from 'astro:schema';
 import { eq, type InferSelectModel } from 'drizzle-orm';
 import { ClientVersions } from '../database/schema';
 import { db } from '../database/database';
+import { permission } from './authentication';
 
 export type Version = InferSelectModel<typeof ClientVersions>;
 
@@ -34,6 +35,8 @@ export const version = {
     delete: defineAction({
         input: z.object({ version: z.string() }),
         async handler(input, context) {
+            await permission(context, (u) => u.administrator);
+
             await db.delete(ClientVersions).where(eq(ClientVersions.version, input.version));
         },
     }),
@@ -41,6 +44,8 @@ export const version = {
     create: defineAction({
         input: z.object({ version: z.string(), endOfLife: z.boolean(), downloadUrl: z.string() }),
         async handler(input, context) {
+            await permission(context, (u) => u.administrator);
+
             await db.insert(ClientVersions).values({
                 version: input.version,
                 endOfLife: input.endOfLife,
@@ -52,6 +57,8 @@ export const version = {
     update: defineAction({
         input: z.object({ version: z.string(), endOfLife: z.boolean(), downloadUrl: z.string() }),
         async handler(input, context) {
+            await permission(context, (u) => u.administrator);
+
             await db
                 .update(ClientVersions)
                 .set({ endOfLife: input.endOfLife, downloadUrl: input.downloadUrl })
