@@ -1,0 +1,27 @@
+{
+    "build": [
+        {
+            "command": "sudo docker build -t glowman554/framework .",
+            "directory": "{{service}}"
+        }
+    ],
+    "containers": [
+        {
+            "name": "framework",
+            "image": "glowman554/framework",
+            "environment": {
+                "SERVER_KEY_PATH": "/etc/letsencrypt/live/framework.toxicfox.de/privkey.pem",
+                "SERVER_CERT_PATH": "/etc/letsencrypt/live/framework.toxicfox.de/fullchain.pem",
+                "PORT": "443"
+            },
+            "mounts": {
+                "/etc/letsencrypt": "/etc/letsencrypt",
+                "{{base}}/data/Framework/config.json": "/srv/config.json",
+                "{{base}}/data/Framework/data.db": "/srv/data.db"
+            },
+            "networks": [
+                "router"
+            ]
+        }
+    ]
+}
