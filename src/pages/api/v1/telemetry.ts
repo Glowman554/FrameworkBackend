@@ -54,7 +54,7 @@ const schema = z.object({
     id: idSchema,
     modifications: modificationsSchema.optional(),
     system: systemSchema.optional(),
-    modules: modulesSchema,
+    modules: modulesSchema.optional(),
     discord: discordSchema.optional(),
 });
 export type TelemetryData = z.infer<typeof schema>;
