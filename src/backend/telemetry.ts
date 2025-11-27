@@ -65,6 +65,10 @@ async function processTelemetrySystem(sessionId: number, system: TelemetryData['
 }
 
 async function processTelemetryModules(sessionId: number, modules: TelemetryData['modules']) {
+    if (!modules) {
+        return;
+    }
+    
     const moduleIds = Object.keys(modules);
 
     for (const id of moduleIds) {
