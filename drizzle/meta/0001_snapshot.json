@@ -1,0 +1,610 @@
+{
+    "version": "6",
+    "dialect": "sqlite",
+    "id": "6ffef7b2-a91e-4c78-9c76-2be659b3b4f3",
+    "prevId": "a7fd3090-5d15-4d7a-a86b-fc06a1968703",
+    "tables": {
+        "clientMessages": {
+            "name": "clientMessages",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "username": {
+                    "name": "username",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "message": {
+                    "name": "message",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "timestamp": {
+                    "name": "timestamp",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "(strftime('%s', 'now'))"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "clientMessages_username_minecraftUsers_username_fk": {
+                    "name": "clientMessages_username_minecraftUsers_username_fk",
+                    "tableFrom": "clientMessages",
+                    "tableTo": "minecraftUsers",
+                    "columnsFrom": ["username"],
+                    "columnsTo": ["username"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "clientVersions": {
+            "name": "clientVersions",
+            "columns": {
+                "version": {
+                    "name": "version",
+                    "type": "text",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "endOfLife": {
+                    "name": "endOfLife",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": false
+                },
+                "downloadUrl": {
+                    "name": "downloadUrl",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "configurationProfiles": {
+            "name": "configurationProfiles",
+            "columns": {
+                "username": {
+                    "name": "username",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "profile": {
+                    "name": "profile",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "configuration": {
+                    "name": "configuration",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "configurationProfiles_username_minecraftUsers_username_fk": {
+                    "name": "configurationProfiles_username_minecraftUsers_username_fk",
+                    "tableFrom": "configurationProfiles",
+                    "tableTo": "minecraftUsers",
+                    "columnsFrom": ["username"],
+                    "columnsTo": ["username"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {
+                "configurationProfiles_username_profile_pk": {
+                    "columns": ["username", "profile"],
+                    "name": "configurationProfiles_username_profile_pk"
+                }
+            },
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "fakeMinecraftUsers": {
+            "name": "fakeMinecraftUsers",
+            "columns": {
+                "username": {
+                    "name": "username",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "token": {
+                    "name": "token",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "fakeMinecraftUsers_username_minecraftUsers_username_fk": {
+                    "name": "fakeMinecraftUsers_username_minecraftUsers_username_fk",
+                    "tableFrom": "fakeMinecraftUsers",
+                    "tableTo": "minecraftUsers",
+                    "columnsFrom": ["username"],
+                    "columnsTo": ["username"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "featuredServers": {
+            "name": "featuredServers",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "name": {
+                    "name": "name",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "address": {
+                    "name": "address",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "minecraftUsers": {
+            "name": "minecraftUsers",
+            "columns": {
+                "username": {
+                    "name": "username",
+                    "type": "text",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "firstSeen": {
+                    "name": "firstSeen",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "(strftime('%s', 'now'))"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "sessions": {
+            "name": "sessions",
+            "columns": {
+                "username": {
+                    "name": "username",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "token": {
+                    "name": "token",
+                    "type": "text",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "creationDate": {
+                    "name": "creationDate",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "(strftime('%s', 'now'))"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "sessions_username_users_username_fk": {
+                    "name": "sessions_username_users_username_fk",
+                    "tableFrom": "sessions",
+                    "tableTo": "users",
+                    "columnsFrom": ["username"],
+                    "columnsTo": ["username"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "telemetryActiveModifications": {
+            "name": "telemetryActiveModifications",
+            "columns": {
+                "sessionId": {
+                    "name": "sessionId",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "name": {
+                    "name": "name",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "version": {
+                    "name": "version",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "telemetryActiveModifications_sessionId_telemetrySessions_sessionId_fk": {
+                    "name": "telemetryActiveModifications_sessionId_telemetrySessions_sessionId_fk",
+                    "tableFrom": "telemetryActiveModifications",
+                    "tableTo": "telemetrySessions",
+                    "columnsFrom": ["sessionId"],
+                    "columnsTo": ["sessionId"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                },
+                "telemetryActiveModifications_name_version_telemetryModifications_name_version_fk": {
+                    "name": "telemetryActiveModifications_name_version_telemetryModifications_name_version_fk",
+                    "tableFrom": "telemetryActiveModifications",
+                    "tableTo": "telemetryModifications",
+                    "columnsFrom": ["name", "version"],
+                    "columnsTo": ["name", "version"],
+                    "onDelete": "no action",
+                    "onUpdate": "no action"
+                }
+            },
+            "compositePrimaryKeys": {
+                "telemetryActiveModifications_sessionId_name_version_pk": {
+                    "columns": ["sessionId", "name", "version"],
+                    "name": "telemetryActiveModifications_sessionId_name_version_pk"
+                }
+            },
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "telemetryActiveModules": {
+            "name": "telemetryActiveModules",
+            "columns": {
+                "sessionId": {
+                    "name": "sessionId",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "id": {
+                    "name": "id",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "enabled": {
+                    "name": "enabled",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "telemetryActiveModules_sessionId_telemetrySessions_sessionId_fk": {
+                    "name": "telemetryActiveModules_sessionId_telemetrySessions_sessionId_fk",
+                    "tableFrom": "telemetryActiveModules",
+                    "tableTo": "telemetrySessions",
+                    "columnsFrom": ["sessionId"],
+                    "columnsTo": ["sessionId"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                },
+                "telemetryActiveModules_id_telemetryModules_id_fk": {
+                    "name": "telemetryActiveModules_id_telemetryModules_id_fk",
+                    "tableFrom": "telemetryActiveModules",
+                    "tableTo": "telemetryModules",
+                    "columnsFrom": ["id"],
+                    "columnsTo": ["id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {
+                "telemetryActiveModules_sessionId_id_pk": {
+                    "columns": ["sessionId", "id"],
+                    "name": "telemetryActiveModules_sessionId_id_pk"
+                }
+            },
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "telemetryDiscord": {
+            "name": "telemetryDiscord",
+            "columns": {
+                "sessionId": {
+                    "name": "sessionId",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "userId": {
+                    "name": "userId",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "username": {
+                    "name": "username",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "discriminator": {
+                    "name": "discriminator",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "telemetryDiscord_sessionId_telemetrySessions_sessionId_fk": {
+                    "name": "telemetryDiscord_sessionId_telemetrySessions_sessionId_fk",
+                    "tableFrom": "telemetryDiscord",
+                    "tableTo": "telemetrySessions",
+                    "columnsFrom": ["sessionId"],
+                    "columnsTo": ["sessionId"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "telemetryModifications": {
+            "name": "telemetryModifications",
+            "columns": {
+                "name": {
+                    "name": "name",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "version": {
+                    "name": "version",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {
+                "telemetryModifications_name_version_pk": {
+                    "columns": ["name", "version"],
+                    "name": "telemetryModifications_name_version_pk"
+                }
+            },
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "telemetryModules": {
+            "name": "telemetryModules",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "text",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": false
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "telemetrySessions": {
+            "name": "telemetrySessions",
+            "columns": {
+                "username": {
+                    "name": "username",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "sessionId": {
+                    "name": "sessionId",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "sessionStart": {
+                    "name": "sessionStart",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "(strftime('%s', 'now'))"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "telemetrySessions_username_minecraftUsers_username_fk": {
+                    "name": "telemetrySessions_username_minecraftUsers_username_fk",
+                    "tableFrom": "telemetrySessions",
+                    "tableTo": "minecraftUsers",
+                    "columnsFrom": ["username"],
+                    "columnsTo": ["username"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "telemetrySystem": {
+            "name": "telemetrySystem",
+            "columns": {
+                "sessionId": {
+                    "name": "sessionId",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "osName": {
+                    "name": "osName",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "osVersion": {
+                    "name": "osVersion",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "osArch": {
+                    "name": "osArch",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "cpuCores": {
+                    "name": "cpuCores",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "telemetrySystem_sessionId_telemetrySessions_sessionId_fk": {
+                    "name": "telemetrySystem_sessionId_telemetrySessions_sessionId_fk",
+                    "tableFrom": "telemetrySystem",
+                    "tableTo": "telemetrySessions",
+                    "columnsFrom": ["sessionId"],
+                    "columnsTo": ["sessionId"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "users": {
+            "name": "users",
+            "columns": {
+                "username": {
+                    "name": "username",
+                    "type": "text",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "administrator": {
+                    "name": "administrator",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": false
+                },
+                "passwordHash": {
+                    "name": "passwordHash",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        }
+    },
+    "views": {},
+    "enums": {},
+    "_meta": {
+        "schemas": {},
+        "tables": {},
+        "columns": {}
+    },
+    "internal": {
+        "indexes": {}
+    }
+}

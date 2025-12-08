@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { validateOrThrow } from '../config';
+import { loadFakeUser } from '../actions/users';
 
 export const SkinSchema = z.object({
     id: z.string(),
@@ -22,7 +23,8 @@ export const ProfileSchema = z.object({
     skins: z.array(SkinSchema),
     capes: z.array(CapeSchema),
 });
-type Profile = z.infer<typeof ProfileSchema>;
+
+export type Profile = z.infer<typeof ProfileSchema>;
 
 const profileCache = new Map<string, Profile & { timestamp: number }>();
 
@@ -33,18 +35,22 @@ export async function getProfile(token: string) {
         return cached;
     }
 
-    const res = await fetch('https://api.minecraftservices.com/minecraft/profile', {
-        headers: {
-            Authorization: 'Bearer ' + token,
-        },
-    });
+    let profile = await loadFakeUser(token);
+    if (!profile) {
+        const res = await fetch('https://api.minecraftservices.com/minecraft/profile', {
+            headers: {
+                Authorization: 'Bearer ' + token,
+            },
+        });
 
-    if (res.status != 200) {
-        console.log(await res.json(), res.status);
-        return null;
+        if (res.status != 200) {
+            console.log(await res.json(), res.status);
+            return null;
+        }
+
+        profile = validateOrThrow(ProfileSchema, await res.json());
     }
 
-    const profile = validateOrThrow(ProfileSchema, await res.json());
     profileCache.set(token, { ...profile, timestamp: Date.now() });
     return profile;
 }

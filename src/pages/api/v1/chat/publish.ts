@@ -1,9 +1,7 @@
 import { type APIContext } from 'astro';
 import { validateOrThrow } from '../../../../config';
 import z from 'zod';
-import { getProfile } from '../../../../backend/minecraft';
 import { actions } from 'astro:actions';
-import type { ChatMessage } from '../../../../actions/chat';
 
 export const prerender = false;
 

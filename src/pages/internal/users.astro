@@ -1,0 +1,16 @@
+---
+import AdministratorOnly from '../../components/AdministratorOnly';
+import FeaturedList from '../../components/featured/FeaturedList.astro';
+import FeaturedNewButton from '../../components/featured/FeaturedNewButton';
+import Layout from '../../components/Layout.astro';
+import FakeUserList from '../../components/users/FakeUserList.astro';
+import FakeUserNewButton from '../../components/users/FakeUserNewButton';
+
+export const prerender = false;
+---
+
+<Layout title="Framework - Fake users (internal)" description="For internal use only">
+    <AdministratorOnly client:load />
+    <FakeUserNewButton client:load />
+    <FakeUserList />
+</Layout>

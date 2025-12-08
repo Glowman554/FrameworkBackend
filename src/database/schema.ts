@@ -27,6 +27,13 @@ export const MinecraftUsers = sqliteTable('minecraftUsers', {
         .notNull(),
 });
 
+export const FakeMinecraftUsers = sqliteTable('fakeMinecraftUsers', {
+    username: text('username')
+        .references(() => MinecraftUsers.username, { onDelete: 'cascade', onUpdate: 'cascade' })
+        .notNull(),
+    token: text('token').notNull(),
+});
+
 export const TelemetrySessions = sqliteTable('telemetrySessions', {
     username: text('username')
         .references(() => MinecraftUsers.username, { onDelete: 'cascade', onUpdate: 'cascade' })
