@@ -22,7 +22,7 @@ async function publish(message: string, username: string) {
         .returning()
         .get();
 
-    await publishChatMessage(result);
+    publishChatMessage(result);
 }
 
 export const chat = {

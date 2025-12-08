@@ -1,12 +1,7 @@
 import { defineAction } from 'astro:actions';
 import { db } from '../database/database';
-import {
-    TelemetryActiveModifications,
-    TelemetryActiveModules,
-    TelemetryModules,
-    TelemetrySystem,
-} from '../database/schema';
-import { and, count, eq, like, not, or } from 'drizzle-orm';
+import { TelemetryActiveModifications, TelemetryActiveModules, TelemetrySystem } from '../database/schema';
+import { and, count, eq, like, not } from 'drizzle-orm';
 import { permission } from './authentication';
 
 export interface TelemetrySystemInfoResult {
@@ -89,16 +84,18 @@ export const telemetry = {
                 })
                 .from(TelemetryActiveModifications)
                 .groupBy(TelemetryActiveModifications.name)
-                .where(or(
-                    not(like(TelemetryActiveModifications.name, 'fabric%')),
-                    not(like(TelemetryActiveModifications.name, 'kotlin%')),
-                    not(like(TelemetryActiveModifications.name, 'glsl%')),
-                    not(like(TelemetryActiveModifications.name, 'OpenJDK%')),
-                    not(like(TelemetryActiveModifications.name, 'MixinExtras%')),
-                    not(like(TelemetryActiveModifications.name, 'Minecraft%')),
-                    not(like(TelemetryActiveModifications.name, 'ConfigManager%')),
-                    not(like(TelemetryActiveModifications.name, 'Forgified%')),
-                ));
+                .where(
+                    and(
+                        not(like(TelemetryActiveModifications.name, 'fabric%')),
+                        not(like(TelemetryActiveModifications.name, 'kotlin%')),
+                        not(like(TelemetryActiveModifications.name, 'glsl%')),
+                        not(like(TelemetryActiveModifications.name, 'OpenJDK%')),
+                        not(like(TelemetryActiveModifications.name, 'MixinExtras%')),
+                        not(like(TelemetryActiveModifications.name, 'Minecraft%')),
+                        not(like(TelemetryActiveModifications.name, 'ConfigManager%')),
+                        not(like(TelemetryActiveModifications.name, 'Forgified%'))
+                    )
+                );
 
             const result: TelemetryActiveModificationsResult = [];
 

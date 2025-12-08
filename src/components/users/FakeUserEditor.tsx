@@ -5,7 +5,6 @@ import { createSignal, Show, useContext } from 'solid-js';
 import { withQuery } from '@glowman554/base-components/src/query/Query';
 import Overlay from '@glowman554/base-components/src/generic/Overlay';
 import { actions } from 'astro:actions';
-import type { FeaturedServer } from '../../actions/featured';
 import type { FakeUser } from '../../actions/users';
 
 export type Props =

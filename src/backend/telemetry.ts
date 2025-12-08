@@ -1,4 +1,3 @@
-import { asc } from 'drizzle-orm';
 import { db } from '../database/database';
 import {
     TelemetryActiveModifications,

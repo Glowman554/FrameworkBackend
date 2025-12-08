@@ -2,7 +2,7 @@ import { type APIContext } from 'astro';
 import { validateOrThrow } from '../../../../config';
 import z from 'zod';
 import { getProfile } from '../../../../backend/minecraft';
-import { createOrUpdateProfile, insertUserIfNecessary } from '../../../../backend/user';
+import { createOrUpdateProfile } from '../../../../backend/user';
 
 export const prerender = false;
 

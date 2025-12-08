@@ -1,7 +1,7 @@
 import { defineAction } from 'astro:actions';
 import { z } from 'astro:schema';
 import { eq, type InferSelectModel } from 'drizzle-orm';
-import { ClientVersions, FakeMinecraftUsers, MinecraftUsers } from '../database/schema';
+import { FakeMinecraftUsers } from '../database/schema';
 import { db } from '../database/database';
 import { createRandomToken, permission } from './authentication';
 import { insertUserIfNecessary } from '../backend/user';
