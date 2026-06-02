@@ -13,14 +13,13 @@ const anonymous = 'anonymous';
 async function publish(message: string, username: string) {
     await insertUserIfNecessary(username);
 
-    const result = await db
+    const [result] = await db
         .insert(ClientMessages)
         .values({
             username: username,
             message: message,
         })
-        .returning()
-        .get();
+        .returning();
 
     publishChatMessage(result);
 }
@@ -56,8 +55,7 @@ export const chat = {
                 .select()
                 .from(ClientMessages)
                 .orderBy(desc(ClientMessages.timestamp))
-                .limit(input.limit)
-                .all();
+                .limit(input.limit);
 
             return messages;
         },

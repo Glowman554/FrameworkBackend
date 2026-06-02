@@ -1,40 +1,48 @@
 {
-    "version": "6",
-    "dialect": "sqlite",
-    "id": "a7fd3090-5d15-4d7a-a86b-fc06a1968703",
+    "id": "f9ec86a9-1acb-4477-be10-7098502af031",
     "prevId": "00000000-0000-0000-0000-000000000000",
+    "version": "7",
+    "dialect": "postgresql",
     "tables": {
-        "clientMessages": {
+        "public.clientMessages": {
             "name": "clientMessages",
+            "schema": "",
             "columns": {
                 "id": {
                     "name": "id",
                     "type": "integer",
                     "primaryKey": true,
                     "notNull": true,
-                    "autoincrement": true
+                    "identity": {
+                        "type": "byDefault",
+                        "name": "clientMessages_id_seq",
+                        "schema": "public",
+                        "increment": "1",
+                        "startWith": "1",
+                        "minValue": "1",
+                        "maxValue": "2147483647",
+                        "cache": "1",
+                        "cycle": false
+                    }
                 },
                 "username": {
                     "name": "username",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "message": {
                     "name": "message",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "timestamp": {
                     "name": "timestamp",
-                    "type": "integer",
+                    "type": "timestamp with time zone",
                     "primaryKey": false,
                     "notNull": true,
-                    "autoincrement": false,
-                    "default": "(strftime('%s', 'now'))"
+                    "default": "(CURRENT_TIMESTAMP)"
                 }
             },
             "indexes": {},
@@ -51,63 +59,63 @@
             },
             "compositePrimaryKeys": {},
             "uniqueConstraints": {},
-            "checkConstraints": {}
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
         },
-        "clientVersions": {
+        "public.clientVersions": {
             "name": "clientVersions",
+            "schema": "",
             "columns": {
                 "version": {
                     "name": "version",
                     "type": "text",
                     "primaryKey": true,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "endOfLife": {
                     "name": "endOfLife",
-                    "type": "integer",
+                    "type": "boolean",
                     "primaryKey": false,
                     "notNull": true,
-                    "autoincrement": false,
                     "default": false
                 },
                 "downloadUrl": {
                     "name": "downloadUrl",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 }
             },
             "indexes": {},
             "foreignKeys": {},
             "compositePrimaryKeys": {},
             "uniqueConstraints": {},
-            "checkConstraints": {}
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
         },
-        "configurationProfiles": {
+        "public.configurationProfiles": {
             "name": "configurationProfiles",
+            "schema": "",
             "columns": {
                 "username": {
                     "name": "username",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "profile": {
                     "name": "profile",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "configuration": {
                     "name": "configuration",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 }
             },
             "indexes": {},
@@ -124,93 +132,140 @@
             },
             "compositePrimaryKeys": {
                 "configurationProfiles_username_profile_pk": {
-                    "columns": ["username", "profile"],
-                    "name": "configurationProfiles_username_profile_pk"
+                    "name": "configurationProfiles_username_profile_pk",
+                    "columns": ["username", "profile"]
                 }
             },
             "uniqueConstraints": {},
-            "checkConstraints": {}
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
         },
-        "featuredServers": {
+        "public.fakeMinecraftUsers": {
+            "name": "fakeMinecraftUsers",
+            "schema": "",
+            "columns": {
+                "username": {
+                    "name": "username",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "token": {
+                    "name": "token",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "fakeMinecraftUsers_username_minecraftUsers_username_fk": {
+                    "name": "fakeMinecraftUsers_username_minecraftUsers_username_fk",
+                    "tableFrom": "fakeMinecraftUsers",
+                    "tableTo": "minecraftUsers",
+                    "columnsFrom": ["username"],
+                    "columnsTo": ["username"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
+        },
+        "public.featuredServers": {
             "name": "featuredServers",
+            "schema": "",
             "columns": {
                 "id": {
                     "name": "id",
                     "type": "integer",
                     "primaryKey": true,
                     "notNull": true,
-                    "autoincrement": true
+                    "identity": {
+                        "type": "byDefault",
+                        "name": "featuredServers_id_seq",
+                        "schema": "public",
+                        "increment": "1",
+                        "startWith": "1",
+                        "minValue": "1",
+                        "maxValue": "2147483647",
+                        "cache": "1",
+                        "cycle": false
+                    }
                 },
                 "name": {
                     "name": "name",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "address": {
                     "name": "address",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 }
             },
             "indexes": {},
             "foreignKeys": {},
             "compositePrimaryKeys": {},
             "uniqueConstraints": {},
-            "checkConstraints": {}
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
         },
-        "minecraftUsers": {
+        "public.minecraftUsers": {
             "name": "minecraftUsers",
+            "schema": "",
             "columns": {
                 "username": {
                     "name": "username",
                     "type": "text",
                     "primaryKey": true,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "firstSeen": {
                     "name": "firstSeen",
-                    "type": "integer",
+                    "type": "timestamp with time zone",
                     "primaryKey": false,
                     "notNull": true,
-                    "autoincrement": false,
-                    "default": "(strftime('%s', 'now'))"
+                    "default": "(CURRENT_TIMESTAMP)"
                 }
             },
             "indexes": {},
             "foreignKeys": {},
             "compositePrimaryKeys": {},
             "uniqueConstraints": {},
-            "checkConstraints": {}
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
         },
-        "sessions": {
+        "public.sessions": {
             "name": "sessions",
+            "schema": "",
             "columns": {
                 "username": {
                     "name": "username",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "token": {
                     "name": "token",
                     "type": "text",
                     "primaryKey": true,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "creationDate": {
                     "name": "creationDate",
-                    "type": "integer",
+                    "type": "timestamp with time zone",
                     "primaryKey": false,
                     "notNull": true,
-                    "autoincrement": false,
-                    "default": "(strftime('%s', 'now'))"
+                    "default": "(CURRENT_TIMESTAMP)"
                 }
             },
             "indexes": {},
@@ -227,31 +282,31 @@
             },
             "compositePrimaryKeys": {},
             "uniqueConstraints": {},
-            "checkConstraints": {}
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
         },
-        "telemetryActiveModifications": {
+        "public.telemetryActiveModifications": {
             "name": "telemetryActiveModifications",
+            "schema": "",
             "columns": {
                 "sessionId": {
                     "name": "sessionId",
                     "type": "integer",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "name": {
                     "name": "name",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "version": {
                     "name": "version",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 }
             },
             "indexes": {},
@@ -277,36 +332,36 @@
             },
             "compositePrimaryKeys": {
                 "telemetryActiveModifications_sessionId_name_version_pk": {
-                    "columns": ["sessionId", "name", "version"],
-                    "name": "telemetryActiveModifications_sessionId_name_version_pk"
+                    "name": "telemetryActiveModifications_sessionId_name_version_pk",
+                    "columns": ["sessionId", "name", "version"]
                 }
             },
             "uniqueConstraints": {},
-            "checkConstraints": {}
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
         },
-        "telemetryActiveModules": {
+        "public.telemetryActiveModules": {
             "name": "telemetryActiveModules",
+            "schema": "",
             "columns": {
                 "sessionId": {
                     "name": "sessionId",
                     "type": "integer",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "id": {
                     "name": "id",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "enabled": {
                     "name": "enabled",
-                    "type": "integer",
+                    "type": "boolean",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 }
             },
             "indexes": {},
@@ -332,43 +387,42 @@
             },
             "compositePrimaryKeys": {
                 "telemetryActiveModules_sessionId_id_pk": {
-                    "columns": ["sessionId", "id"],
-                    "name": "telemetryActiveModules_sessionId_id_pk"
+                    "name": "telemetryActiveModules_sessionId_id_pk",
+                    "columns": ["sessionId", "id"]
                 }
             },
             "uniqueConstraints": {},
-            "checkConstraints": {}
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
         },
-        "telemetryDiscord": {
+        "public.telemetryDiscord": {
             "name": "telemetryDiscord",
+            "schema": "",
             "columns": {
                 "sessionId": {
                     "name": "sessionId",
                     "type": "integer",
                     "primaryKey": true,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "userId": {
                     "name": "userId",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "username": {
                     "name": "username",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "discriminator": {
                     "name": "discriminator",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": false,
-                    "autoincrement": false
+                    "notNull": false
                 }
             },
             "indexes": {},
@@ -385,78 +439,81 @@
             },
             "compositePrimaryKeys": {},
             "uniqueConstraints": {},
-            "checkConstraints": {}
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
         },
-        "telemetryModifications": {
+        "public.telemetryModifications": {
             "name": "telemetryModifications",
+            "schema": "",
             "columns": {
                 "name": {
                     "name": "name",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "version": {
                     "name": "version",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 }
             },
             "indexes": {},
             "foreignKeys": {},
             "compositePrimaryKeys": {
                 "telemetryModifications_name_version_pk": {
-                    "columns": ["name", "version"],
-                    "name": "telemetryModifications_name_version_pk"
+                    "name": "telemetryModifications_name_version_pk",
+                    "columns": ["name", "version"]
                 }
             },
             "uniqueConstraints": {},
-            "checkConstraints": {}
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
         },
-        "telemetryModules": {
+        "public.telemetryModules": {
             "name": "telemetryModules",
+            "schema": "",
             "columns": {
                 "id": {
                     "name": "id",
                     "type": "text",
                     "primaryKey": true,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 }
             },
             "indexes": {},
             "foreignKeys": {},
             "compositePrimaryKeys": {},
             "uniqueConstraints": {},
-            "checkConstraints": {}
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
         },
-        "telemetrySessions": {
+        "public.telemetrySessions": {
             "name": "telemetrySessions",
+            "schema": "",
             "columns": {
                 "username": {
                     "name": "username",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "sessionId": {
                     "name": "sessionId",
                     "type": "integer",
                     "primaryKey": true,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "sessionStart": {
                     "name": "sessionStart",
-                    "type": "integer",
+                    "type": "timestamp with time zone",
                     "primaryKey": false,
                     "notNull": true,
-                    "autoincrement": false,
-                    "default": "(strftime('%s', 'now'))"
+                    "default": "(CURRENT_TIMESTAMP)"
                 }
             },
             "indexes": {},
@@ -473,45 +530,43 @@
             },
             "compositePrimaryKeys": {},
             "uniqueConstraints": {},
-            "checkConstraints": {}
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
         },
-        "telemetrySystem": {
+        "public.telemetrySystem": {
             "name": "telemetrySystem",
+            "schema": "",
             "columns": {
                 "sessionId": {
                     "name": "sessionId",
                     "type": "integer",
                     "primaryKey": true,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "osName": {
                     "name": "osName",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "osVersion": {
                     "name": "osVersion",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "osArch": {
                     "name": "osArch",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "cpuCores": {
                     "name": "cpuCores",
                     "type": "integer",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 }
             },
             "indexes": {},
@@ -528,49 +583,52 @@
             },
             "compositePrimaryKeys": {},
             "uniqueConstraints": {},
-            "checkConstraints": {}
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
         },
-        "users": {
+        "public.users": {
             "name": "users",
+            "schema": "",
             "columns": {
                 "username": {
                     "name": "username",
                     "type": "text",
                     "primaryKey": true,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 },
                 "administrator": {
                     "name": "administrator",
-                    "type": "integer",
+                    "type": "boolean",
                     "primaryKey": false,
                     "notNull": true,
-                    "autoincrement": false,
                     "default": false
                 },
                 "passwordHash": {
                     "name": "passwordHash",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true,
-                    "autoincrement": false
+                    "notNull": true
                 }
             },
             "indexes": {},
             "foreignKeys": {},
             "compositePrimaryKeys": {},
             "uniqueConstraints": {},
-            "checkConstraints": {}
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
         }
     },
-    "views": {},
     "enums": {},
+    "schemas": {},
+    "sequences": {},
+    "roles": {},
+    "policies": {},
+    "views": {},
     "_meta": {
+        "columns": {},
         "schemas": {},
-        "tables": {},
-        "columns": {}
-    },
-    "internal": {
-        "indexes": {}
+        "tables": {}
     }
 }

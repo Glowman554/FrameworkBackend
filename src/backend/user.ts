@@ -20,11 +20,10 @@ export async function createOrUpdateProfile(username: string, profile: string, c
 }
 
 export async function loadProfile(username: string, profile: string) {
-    const loaded = await db
+    const [loaded] = await db
         .select()
         .from(ConfigurationProfiles)
-        .where(and(eq(ConfigurationProfiles.username, username), eq(ConfigurationProfiles.profile, profile)))
-        .get();
+        .where(and(eq(ConfigurationProfiles.username, username), eq(ConfigurationProfiles.profile, profile)));
 
     if (!loaded) {
         throw new Error('Failed to load profile');

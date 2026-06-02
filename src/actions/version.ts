@@ -11,11 +11,7 @@ export const version = {
     load: defineAction({
         input: z.object({ version: z.string() }),
         async handler(input, context) {
-            const loaded = await db
-                .select()
-                .from(ClientVersions)
-                .where(eq(ClientVersions.version, input.version))
-                .get();
+            const [loaded] = await db.select().from(ClientVersions).where(eq(ClientVersions.version, input.version));
 
             if (!loaded) {
                 throw new Error('Version not found');
@@ -27,7 +23,7 @@ export const version = {
 
     loadAll: defineAction({
         async handler(input, context) {
-            const loaded = await db.select().from(ClientVersions).all();
+            const loaded = await db.select().from(ClientVersions);
             return loaded satisfies Version[];
         },
     }),

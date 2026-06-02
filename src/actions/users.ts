@@ -10,7 +10,7 @@ import type { Profile } from '../backend/minecraft';
 export type FakeUser = InferSelectModel<typeof FakeMinecraftUsers>;
 
 export async function loadFakeUser(token: string): Promise<Profile | null> {
-    const user = await db.select().from(FakeMinecraftUsers).where(eq(FakeMinecraftUsers.token, token)).get();
+    const [user] = await db.select().from(FakeMinecraftUsers).where(eq(FakeMinecraftUsers.token, token));
     if (!user) {
         return null;
     }
@@ -28,7 +28,7 @@ export const users = {
         async handler(input, context) {
             await permission(context, (u) => u.administrator);
 
-            const loaded = await db.select().from(FakeMinecraftUsers).all();
+            const loaded = await db.select().from(FakeMinecraftUsers);
             return loaded satisfies FakeUser[];
         },
     }),

@@ -10,7 +10,7 @@ export type FeaturedServer = InferSelectModel<typeof FeaturedServers>;
 export const featured = {
     loadAll: defineAction({
         async handler(input, context) {
-            const loaded = await db.select().from(FeaturedServers).all();
+            const loaded = await db.select().from(FeaturedServers);
             return loaded;
         },
     }),
